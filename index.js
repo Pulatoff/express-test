@@ -2,9 +2,13 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const app = express();
-const userRouter = require("./router/userRoute.js");
-const testRouter = require("./router/testRouter");
+const userRouter = require("./route/userRoute.js");
+const testRouter = require("./route/testRouter");
+const formRouter = require("./route/formRouter");
+
 // MiddleWares
+
+app.use(bodyParser.urlencoded({ extended: true })); // Formani malumotlarini olish uchun
 
 app.use(express.json());
 
@@ -18,11 +22,8 @@ app.use((req, res, next) => {
 });
 
 app.disable("x-powered-by");
-
 app.use("/user", userRouter);
-
 app.use("/test", testRouter);
-
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use("/form", formRouter);
 
 module.exports = app;
